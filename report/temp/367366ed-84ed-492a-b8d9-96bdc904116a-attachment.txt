@@ -1,0 +1,3 @@
+INFO     AutoTest:conftest.py:9 -------------接口测试开始--------------
+ERROR    common.sendrequest:sendrequest.py:49 请求异常: No connection adapters were found for '<http://127.0.0.1:5000>/test'
+INFO     AutoTest:conftest.py:11 -------------接口测试结束--------------
