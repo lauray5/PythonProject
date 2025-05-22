@@ -1,0 +1,12 @@
+- baseInfo:
+    api_name: 简单API测试
+    url: /test
+    method: GET
+    header:
+      Content-Type: application/json
+  testCase:
+    - case_name: 正常请求
+      request_params: {}  # 明确请求参数结构
+      validation:
+        status_code: 200  # 分离验证字段便于解析
+        message: Success

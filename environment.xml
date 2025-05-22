@@ -1,0 +1,7 @@
+<environment>
+<parameter>
+<key>API_HOST</key>
+<value>http://127.0.0.1:8787</value>
+</parameter>
+<!-- 可以添加更多参数 -->
+</environment>

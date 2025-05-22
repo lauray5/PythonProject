@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.071" timestamp="2025-05-22T11:22:53.495748+08:00" hostname="Lenovo-Rory"><testcase classname="testcase.test_api.TestAPI" name="test_api[base_info0-testcase0]" time="0.011"><failure message="AttributeError: 'ConfigParser' object has no attribute 'get_section_for_data'">self = &lt;testcase.test_api.TestAPI object at 0x00000188831D3D90&gt;
+base_info = {'api_name': '简单API测试', 'header': {'Content-Type': 'application/json'}, 'method': 'GET', 'url': '/test'}
+testcase = {'case_name': '正常请求', 'request_params': {}, 'validation': {'message': 'Success', 'status_code': 200}}
+
+    @allure.story(next(c_id) + "测试接口")
+    @pytest.mark.parametrize('base_info,testcase', get_testcase_yaml('./data/test_data.yaml'))
+    def test_api(self, base_info, testcase):
+        allure.dynamic.title(testcase['case_name'])
+&gt;       RequestBase().specification_yaml(base_info, testcase)
+
+testcase\test_api.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;base.apiutil.RequestBase object at 0x0000018883316F90&gt;
+base_info = {'api_name': '简单API测试', 'header': {'Content-Type': 'application/json'}, 'method': 'GET', 'url': '/test'}
+test_case = {'case_name': '正常请求', 'request_params': {}, 'validation': {'message': 'Success', 'status_code': 200}}
+
+    def specification_yaml(self, base_info, test_case):
+        """适配YAML测试用例的入口方法"""
+&gt;       url_host = self.conf.get_section_for_data('api_envi', 'host')
+E       AttributeError: 'ConfigParser' object has no attribute 'get_section_for_data'
+
+base\apiutil.py:18: AttributeError</failure></testcase></testsuite></testsuites>
