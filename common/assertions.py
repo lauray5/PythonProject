@@ -1,6 +1,10 @@
 import allure
 import jsonpath
 from common.recordlog import logs
+import logging
+import allure
+from jsonpath import jsonpath
+logs = logging.getLogger(__name__)
 
 class Assertions:
     def contains_assert(self, value, response, status_code):

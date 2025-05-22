@@ -2,7 +2,10 @@ from configparser import ConfigParser
 import requests
 import allure
 from common.recordlog import logs
-
+import requests
+import logging
+import allure
+logs = logging.getLogger(__name__)
 
 class SendRequest:
     def _validate_response(self, response, validation_rules):
@@ -22,17 +25,26 @@ class SendRequest:
         session = requests.Session()
         try:
             logs.info(f'接口请求开始 | {name} | {url}')
+            # 提取 request_params
+            request_params = kwargs.get('request_params', {})
+            # 根据请求方法处理 request_params
+            if method.upper() == 'GET':
+                request_kwargs = {'params': request_params}
+            else:
+                # 假设其他请求方法使用 JSON 数据
+                request_kwargs = {'json': request_params}
+
             response = session.request(
                 method=method,
                 url=url,
                 headers=header or {},
-                **{k: v for k, v in kwargs.items() if k not in ['validation']}
+                **request_kwargs
             )
-            self._validate_response(response, kwargs.get('validation'))
+            logs.info(f'接口请求结束 | {name} | 状态码: {response.status_code}')
+            # 提取出 validation 参数进行断言
+            if 'validation' in kwargs:
+                Assertions().assert_all(response, kwargs['validation'])
             return response
         except Exception as e:
-            logs.error(f'请求异常: {str(e)}')
-            allure.attach(str(e), '请求异常', allure.attachment_type.TEXT)
+            logs.error(f'请求异常: {e}')
             raise
-
-

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.071" timestamp="2025-05-22T11:22:53.495748+08:00" hostname="Lenovo-Rory"><testcase classname="testcase.test_api.TestAPI" name="test_api[base_info0-testcase0]" time="0.011"><failure message="AttributeError: 'ConfigParser' object has no attribute 'get_section_for_data'">self = &lt;testcase.test_api.TestAPI object at 0x00000188831D3D90&gt;
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.075" timestamp="2025-05-22T15:20:17.701976+08:00" hostname="Lenovo-Rory"><testcase classname="testcase.test_api.TestAPI" name="test_api[base_info0-testcase0]" time="0.006"><failure message="requests.exceptions.InvalidSchema: No connection adapters were found for '&lt;http://127.0.0.1:5000&gt;/test'">self = &lt;testcase.test_api.TestAPI object at 0x000001FACD3CC050&gt;
 base_info = {'api_name': '简单API测试', 'header': {'Content-Type': 'application/json'}, 'method': 'GET', 'url': '/test'}
 testcase = {'case_name': '正常请求', 'request_params': {}, 'validation': {'message': 'Success', 'status_code': 200}}
 
@@ -10,14 +10,31 @@ testcase = {'case_name': '正常请求', 'request_params': {}, 'validation': {'m
 
 testcase\test_api.py:13: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+base\apiutil.py:20: in specification_yaml
+    return self.run.run_main(
+common\sendrequest.py:37: in run_main
+    response = session.request(
+.venv\Lib\site-packages\requests\sessions.py:589: in request
+    resp = self.send(prep, **send_kwargs)
+.venv\Lib\site-packages\requests\sessions.py:697: in send
+    adapter = self.get_adapter(url=request.url)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-self = &lt;base.apiutil.RequestBase object at 0x0000018883316F90&gt;
-base_info = {'api_name': '简单API测试', 'header': {'Content-Type': 'application/json'}, 'method': 'GET', 'url': '/test'}
-test_case = {'case_name': '正常请求', 'request_params': {}, 'validation': {'message': 'Success', 'status_code': 200}}
+self = &lt;requests.sessions.Session object at 0x000001FACD36B8C0&gt;
+url = '&lt;http://127.0.0.1:5000&gt;/test'
 
-    def specification_yaml(self, base_info, test_case):
-        """适配YAML测试用例的入口方法"""
-&gt;       url_host = self.conf.get_section_for_data('api_envi', 'host')
-E       AttributeError: 'ConfigParser' object has no attribute 'get_section_for_data'
+    def get_adapter(self, url):
+        """
+        Returns the appropriate connection adapter for the given URL.
+    
+        :rtype: requests.adapters.BaseAdapter
+        """
+        for prefix, adapter in self.adapters.items():
+            if url.lower().startswith(prefix.lower()):
+                return adapter
+    
+        # Nothing matches :-/
+&gt;       raise InvalidSchema(f"No connection adapters were found for {url!r}")
+E       requests.exceptions.InvalidSchema: No connection adapters were found for '&lt;http://127.0.0.1:5000&gt;/test'
 
-base\apiutil.py:18: AttributeError</failure></testcase></testsuite></testsuites>
+.venv\Lib\site-packages\requests\sessions.py:792: InvalidSchema</failure></testcase></testsuite></testsuites>

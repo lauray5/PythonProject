@@ -19,7 +19,6 @@ if __name__ == '__main__':
             ])
             shutil.copy(environment_xml_path, './report/temp')
             os.system('allure serve ./report/temp')
-
         elif REPORT_TYPE == 'tm':
             pytest.main([
                 '-vs',

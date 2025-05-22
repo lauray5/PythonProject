@@ -1,2 +1,0 @@
-INFO     AutoTest:conftest.py:9 -------------接口测试开始--------------
-INFO     AutoTest:conftest.py:11 -------------接口测试结束--------------
